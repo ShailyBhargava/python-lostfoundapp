@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Lost & Found</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Background with animated circles */
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #dce3f0;
+      background: #0f2027;
+      position: relative;
+    }
+
+    /* Scrollable content wrapper */
+    .content-wrapper {
+      max-width: 900px;
+      width: 100%;
+      overflow-y: auto;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    /* Animated floating circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      animation: move 20s linear infinite;
+    }
+
+    .circle:nth-child(1) {
+      width: 200px;
+      height: 200px;
+      top: 10%;
+      left: 20%;
+      animation-duration: 25s;
+    }
+
+    .circle:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      left: 70%;
+      animation-duration: 18s;
+    }
+
+    .circle:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      top: 30%;
+      left: 80%;
+      animation-duration: 22s;
+    }
+
+    .circle:nth-child(4) {
+      width: 250px;
+      height: 250px;
+      top: 80%;
+      left: 10%;
+      animation-duration: 30s;
+    }
+
+    .circle:nth-child(5) {
+      width: 120px;
+      height: 120px;
+      top: 50%;
+      left: 50%;
+      animation-duration: 20s;
+    }
+
+    @keyframes move {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-50px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    /* Profile Header */
+    .profile-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Profile DP */
+    /* Profile DP */
+    .profile-pic-wrapper {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    
+    .profile-pic-wrapper img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: white;
+      transform: scale(1.1); /* Image zoomed 10% */
+    }
+    
+    .camera-icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ffffffcc;
+      border-radius: 50%;
+      padding: 7px;
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      z-index: 2;
+    }
+    
+    .camera-icon:hover {
+      background: #ffffff;
+    }
+    
+
+    /* Username */
+    .username {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 18px;
+      color: #f0f4ff;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+    }
+
+    /* Profile Info */
+    .profile-info {
+      margin-top: 20px;
+      z-index: 1;
+    }
+
+    .info-item {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #c8d3f5;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #b0c7ff;
+      margin-right: 5px;
+    }
+
+    /* Report buttons */
+    .report-buttons {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .btn-report {
+      margin: 5px;
+      padding: 12px 30px;
+      color: white;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 50px;
+      text-decoration: none;
+      background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn-report:hover {
+      transform: translateY(-3px);
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.6);
+      background-image: linear-gradient(315deg, #2575fc 0%, #6a11cb 74%);
+    }
+
+    /* Table Header */
+    th {
+      background-color: #2575fc;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* Table Rows */
+    td {
+      background-color: #1c2b36;
+      color: #dce3f0;
+      text-align: center;
+    }
+
+    /* Back Button */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 15px;
+      background-color: #2575fc;
+      color: white;
+      border-radius: 5px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .back-button i {
+      margin-right: 8px;
+    }
+
+    /* Sign Out Button */
+    .sign-out-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background-color: #ff5c5c;
+      color: white;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .sign-out-button:hover {
+      background-color: #ff4747;
+    }
+
+    .sign-out-button i {
+      margin-right: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Floating animated circles -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <!-- Back Button -->
+  <a href="{{ url_for('dashboard') }}" class="back-button">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
+
+  <!-- Sign Out Button -->
+  <a href="{{ url_for('logout') }}" class="sign-out-button">
+    <i class="fas fa-sign-out-alt"></i> Sign Out
+  </a>
+
+  <div class="content-wrapper">
+    <div class="profile-header">
+      <!-- Profile Picture -->
+    <!-- Profile Picture -->
+<div class="profile-pic-wrapper">
+  <img src="{{ url_for('static', filename='images/defaultdp.png') }}" alt="">
+  <i class="fas fa-camera camera-icon"></i> <!-- Icon in the corner -->
+</div>
+
+
+      <!-- Username -->
+      <div class="username">{{ current_user.name }}</div>
+    </div>
+
+    <div class="profile-info">
+      <div class="info-item">
+        <span class="label">Email:</span>
+        <span>{{ current_user.email }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Role:</span>
+        <span>{{ 'Admin' if current_user.is_admin else 'User' }}</span>
+      </div>
+    </div>
+
+    <!-- Reported Items Table -->
+    <!-- Reported Items Table -->
+<!-- Reported Items Table -->
+
+{% if not current_user.is_admin %}
+<h2>Your Reported Items</h2>
+  {% if items %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>
+            {% if item.status == 'Lost' %}
+              <span class="badge bg-danger">Lost</span>
+            {% elif item.status == 'Found' %}
+              <span class="badge bg-success">Found</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ item.status }}</span>
+            {% endif %}
+          </td>
+          <td>{{ item.location }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-center mt-3">You haven’t reported any items yet.</p>
+  {% endif %}
+{% endif %}
+
+        
+        
+      
+    {% if not current_user.is_admin %}
+      <div class="report-buttons">
+        <a href="{{ url_for('report_lost') }}" class="btn btn-report">Report Lost Item</a>
+        <a href="{{ url_for('report_found') }}" class="btn btn-report">Report Found Item</a>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

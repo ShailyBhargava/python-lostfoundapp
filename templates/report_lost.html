@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    .report-container {
+        background-color: #f0f4f8;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .report-header {
+        background: linear-gradient(90deg, #023e8a, #219ebc);
+        color: white;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 1.2rem;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #023047;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #8ecae6;
+    }
+
+    .form-control:focus {
+        border-color: #219ebc;
+        box-shadow: 0 0 0 0.2rem rgba(2, 62, 138, 0.25);
+    }
+
+    .btn-submit {
+        background: linear-gradient(to right, #fb8500, #ffb703);
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(to right, #ffb703, #fb8500);
+    }
+
+    .btn-back {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        background-color: #0056b3;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    .btn-back i {
+        margin-right: 8px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="card report-container">
+        <div class="report-header">
+            <h3>Report Lost Item</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Item Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="e.g. Black Wallet" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <input type="text" name="category" class="form-control" placeholder="e.g. Accessories, Electronics">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date Lost</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3" placeholder="Brief description of the item"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control" placeholder="Where you lost the item" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image (URL or Filename)</label>
+                    <input type="text" name="image" class="form-control" placeholder="Optional image URL or filename">
+                </div>
+
+                <div class="button-group">
+                    <!-- Back Button -->
+                    <a href="{{ url_for('dashboard') }}" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">Submit Report</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost & Found Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    /* Global */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background: #0f2027;  /* fallback */
+      background: linear-gradient(135deg, #8ecae6, #219ebc);
+      position: relative;
+    }
+
+    .background-circles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: move 25s linear infinite;
+    }
+
+    @keyframes move {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-500px) scale(1.5);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(90deg, #023e8a, #219ebc);
+      z-index: 1000;
+      position: relative;
+    }
+
+    .navbar-brand,
+    .navbar-nav .nav-link {
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #8ecae6 !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 20px;
+      z-index: 1;
+      position: relative;
+      background: transparent;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #023047;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: #023047;
+      margin-top: 1rem;
+    }
+
+    .hero .buttons {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .login,
+    .register {
+      width: 200px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+    .login {
+      background: linear-gradient(90deg, #fb8500, #ffb703);
+    }
+    .register {
+      background: linear-gradient(90deg, #023e8a, #219ebc);
+    }
+    .login:hover, .register:hover {
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      background: #023047;
+      color: #ffffff;
+      padding: 2rem 0;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    footer h4 {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #ffb703;
+    }
+    footer p {
+      margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero .buttons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="background-circles">
+  <!-- Multiple circles floating -->
+  <div class="circle" style="width: 200px; height: 200px; left: 10%; top: 80%; animation-duration: 20s;"></div>
+  <div class="circle" style="width: 150px; height: 150px; left: 70%; top: 90%; animation-duration: 25s;"></div>
+  <div class="circle" style="width: 100px; height: 100px; left: 50%; top: 60%; animation-duration: 30s;"></div>
+  <div class="circle" style="width: 120px; height: 120px; left: 20%; top: 70%; animation-duration: 35s;"></div>
+  <div class="circle" style="width: 90px; height: 90px; left: 80%; top: 60%; animation-duration: 40s;"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Lost & Found</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('lost_items') }}">Lost</a></li>
+        {% if not current_user.is_authenticated or current_user.role != 'admin' %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('report_lost') }}">Report Lost</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('report_found') }}">Report Found</a></li>
+        {% endif %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('found_items') }}">Found</a></li>
+        {% if current_user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile</a></li>
+         
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="container mt-4">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for msg in messages %}
+  <div class="alert alert-info text-center">{{ msg }}</div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <div class="hero row">
+    <div class="col-md-6 d-flex flex-column justify-content-center">
+      <h1>Find & Recover <br> With Ease</h1>
+      <p>Experience effortless recovery with our dedicated lost and found service.</p>
+      <div class="buttons">
+        <a href="{{ url_for('login') }}" class="btn login">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="{{ url_for('register') }}" class="btn register">
+          <i class="fas fa-user-plus"></i> Register
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+      <img src="{{ url_for('static', filename='images/lostfound.png') }}" alt="Lost and Found" class="img-fluid" style="max-height: 400px;">
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+{% if request.path == '/' %}
+<footer>
+  <div>
+    <h4>Site</h4>
+    <p>Lost<br>Report Lost<br>Found<br>Report Found</p>
+  </div>
+  <div>
+    <h4>Help</h4>
+    <p>Customer Support<br>Terms & Conditions<br>Privacy Policy</p>
+  </div>
+  <div>
+    <h4>Links</h4>
+    <p>Facebook<br>YouTube<br>Reddit</p>
+  </div>
+  <div>
+    <h4>Contact</h4>
+    <p>Tel: +91 8826897374<br>Email: foundyouritem@gmail.com</p>
+  </div>
+</footer>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

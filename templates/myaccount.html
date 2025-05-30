@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Inline CSS matching your index.html colors */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 40px;
+        }
+
+        .profile-card, .items-card {
+            background: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-card {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+        }
+
+        .items-card {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .item {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Profile Section -->
+        <div class="profile-card">
+            <h1>My Profile</h1>
+            <p><strong>Full Name:</strong> {{ profile.full_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ profile.phone }}</p>
+
+            <div class="button-container">
+                <a href="{{ url_for('report_lost') }}" class="btn">Report Lost Item</a>
+                <a href="{{ url_for('report_found') }}" class="btn">Report Found Item</a>
+            </div>
+        </div>
+
+        <!-- Reported Items Section -->
+        <div class="items-card">
+            <h1>My Reported Items</h1>
+            {% if items %}
+                {% for item in items %}
+                    <div class="item">
+                        <h3>{{ item.name }} ({{ item.status }})</h3>
+                        <p><strong>Category:</strong> {{ item.category }}</p>
+                        <p><strong>Location:</strong> {{ item.location }}</p>
+                        <p><strong>Date:</strong> {{ item.date }}</p>
+                        <p><strong>Description:</strong> {{ item.description }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You have not reported any items yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2 class="my-4">Report Lost or Found Item</h2>
+
+<form method="POST" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="name" class="form-label">Item Name</label>
+        <input type="text" name="name" id="name" class="form-control" required>
+        <div class="invalid-feedback">Please provide a valid item name.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input type="text" name="category" id="category" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" name="date" id="date" class="form-control" required>
+        <div class="invalid-feedback">Please provide a valid date.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" id="description" class="form-control" rows="4"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="location" id="location" class="form-control" required>
+        <div class="invalid-feedback">Please provide a valid location.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Image (URL or Filename)</label>
+        <input type="text" name="image" id="image" class="form-control">
+    </div>
+
+    <!-- Status will be set dynamically depending on the route -->
+    <input type="hidden" name="status" value="{{ 'lost' if 'report_lost' in request.endpoint else 'found' }}">
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+{% endblock %}
+
+<script>
+    // JavaScript to handle form validation
+    (function () {
+        'use strict'
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission if the form is invalid
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

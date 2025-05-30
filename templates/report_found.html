@@ -1,0 +1,237 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    /* Add the bubble background animation from layout.html */
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    .background span {
+        position: absolute;
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        bottom: -150px;
+        animation: bubble 15s linear infinite;
+        border-radius: 50%;
+    }
+
+    .background span:nth-child(1) {
+        left: 10%;
+        width: 40px;
+        height: 40px;
+        animation-duration: 20s;
+    }
+
+    .background span:nth-child(2) {
+        left: 20%;
+        width: 20px;
+        height: 20px;
+        animation-duration: 17s;
+    }
+
+    .background span:nth-child(3) {
+        left: 25%;
+        width: 50px;
+        height: 50px;
+        animation-duration: 22s;
+    }
+
+    .background span:nth-child(4) {
+        left: 40%;
+        width: 30px;
+        height: 30px;
+        animation-duration: 19s;
+    }
+
+    .background span:nth-child(5) {
+        left: 55%;
+        width: 60px;
+        height: 60px;
+        animation-duration: 25s;
+    }
+
+    .background span:nth-child(6) {
+        left: 70%;
+        width: 25px;
+        height: 25px;
+        animation-duration: 18s;
+    }
+
+    .background span:nth-child(7) {
+        left: 80%;
+        width: 45px;
+        height: 45px;
+        animation-duration: 20s;
+    }
+
+    .background span:nth-child(8) {
+        left: 90%;
+        width: 35px;
+        height: 35px;
+        animation-duration: 23s;
+    }
+
+    @keyframes bubble {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-1000px) scale(1.5);
+            opacity: 0;
+        }
+    }
+
+    /* Report Form Styles */
+    .report-container {
+        background-color: #f0f4f8;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .report-header {
+        background: linear-gradient(90deg, #023e8a, #219ebc);
+        color: white;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 1.2rem;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #023047;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #8ecae6;
+    }
+
+    .form-control:focus {
+        border-color: #219ebc;
+        box-shadow: 0 0 0 0.2rem rgba(2, 62, 138, 0.25);
+    }
+
+    .btn-submit {
+        background: linear-gradient(to right, #fb8500, #ffb703);
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(to right, #ffb703, #fb8500);
+    }
+
+    .btn-back {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .btn-back:hover {
+        background-color: #0056b3;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    .btn-back i {
+        margin-right: 8px;
+    }
+</style>
+
+<!-- Bubble Background -->
+<div class="background">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Report Form -->
+<div class="container mt-4">
+    <div class="card report-container">
+        <div class="report-header">
+            <h3>Report Found Item</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Item Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <input type="text" name="category" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="4"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Image (URL or Filename)</label>
+                    <input type="text" name="image" class="form-control">
+                </div>
+
+                <div class="button-group">
+                    <!-- Back Button -->
+                    <a href="{{ url_for('dashboard') }}" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

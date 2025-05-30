@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    .back-button {
+        padding: 10px 15px;
+        background-color: #2575fc;
+        color: white;
+        border-radius: 5px;
+        font-size: 18px;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .back-button i {
+        margin-right: 8px;
+    }
+</style>
+
+<h2>Your Reported Items</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>
+                {% if item.status == 'Lost' %}
+                    <span class="badge bg-danger">Lost</span>
+                {% elif item.status == 'Found' %}
+                    <span class="badge bg-success">Found</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ item.status }}</span>
+                {% endif %}
+            </td>
+            <td>{{ item.location }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Back Button aligned to right just below the table -->
+<div class="d-flex justify-content-end mt-3">
+    <a href="{{ url_for('profile') }}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back 
+    </a>
+</div>
+
+{% endblock %}
