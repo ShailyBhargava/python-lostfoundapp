@@ -1,0 +1,27 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment
+venv/
+ENV/
+env/
+
+# Ignore environment files
+.env
+
+# Ignore instance folder (for configs, uploads)
+instance/
+
+# Ignore image uploads (optional - if not needed in repo)
+static/profile_images/
+!static/profile_images/defaultdp.png
+
+# Ignore SQLite DB files (if any)
+*.sqlite3
+*.db
+
+# Ignore OS & editor files
+.DS_Store
+Thumbs.db
+.vscode/

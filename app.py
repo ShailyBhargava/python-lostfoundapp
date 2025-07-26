@@ -105,7 +105,7 @@ def register():
         db.session.commit()         # changes save karo database me
 
         flash('Registration successful! Please sign in.', 'success')
-        return redirect(url_for('login'))   # sign-in page pe bhejo
+        return redirect(url_for('login'))  
 
     return render_template('register.html')
 
