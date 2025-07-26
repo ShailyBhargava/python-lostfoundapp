@@ -25,3 +25,7 @@ static/profile_images/
 .DS_Store
 Thumbs.db
 .vscode/
+venv/
+__pycache__/
+*.pyc
+instance/
