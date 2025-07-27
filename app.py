@@ -98,7 +98,8 @@ def register():
             return redirect(url_for('register'))
 
         
-        new_user = User(email=email, password=password, full_name=full_name)
+        hashed_password = generate_password_hash(password)
+        new_user = User(email=email, password=hashed_password, full_name=full_name)
 
 
         db.session.add(new_user)    # session me add karo
