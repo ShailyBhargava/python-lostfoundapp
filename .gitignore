@@ -14,7 +14,7 @@ env/
 instance/
 
 # Ignore image uploads (optional - if not needed in repo)
-static/profile_images/
+static/images/
 !static/profile_images/defaultdp.png
 
 # Ignore SQLite DB files (if any)
