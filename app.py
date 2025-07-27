@@ -15,7 +15,8 @@ app = Flask(__name__)
 
 # Configuration
 load_dotenv() 
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lost_found.db'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
