@@ -17,7 +17,8 @@ app = Flask(__name__)
 load_dotenv() 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lost_found.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -30,6 +31,9 @@ mail = Mail(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+from flask_migrate import Migrate
+migrate = Migrate(app, db)
 
 # Models
 class User(UserMixin, db.Model):
@@ -306,8 +310,8 @@ def mark_resolved(item_id):
 
     if user:
         try:
-            send_notification_email(user.email, item)
-            flash('Item marked as resolved. Notification email sent to the user.')
+           send_notification_email(user.email, item)
+           flash('Item marked as resolved. Notification email sent to the user.')
         except Exception as e:
             flash(f'Item marked as resolved but failed to send email: {str(e)}')
     else:
@@ -439,10 +443,10 @@ def profile():
 
  
 
-
-
-# Run the app
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+        db.create_all()   # make sure tables exist
+        create_admin()    # ✅ ensure admin user exists
+    app.run(host='0.0.0.0', port=10000)
+
+

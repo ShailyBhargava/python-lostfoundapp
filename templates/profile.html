@@ -12,7 +12,6 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -21,64 +20,32 @@
       color: #dce3f0;
       background: #0f2027;
       position: relative;
+      overflow-y: auto; /* ✅ allow vertical scrolling */
     }
 
-    /* Scrollable content wrapper */
+    /* Content wrapper */
     .content-wrapper {
       max-width: 900px;
       width: 100%;
-      overflow-y: auto;
       padding: 20px;
       margin-top: 30px;
+      z-index: 1; /* above circles */
     }
 
     /* Animated floating circles */
     .circle {
-      position: absolute;
+      position: fixed; /* ✅ fixed so they don't move while scrolling */
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.08);
       animation: move 20s linear infinite;
+      z-index: 0;
     }
 
-    .circle:nth-child(1) {
-      width: 200px;
-      height: 200px;
-      top: 10%;
-      left: 20%;
-      animation-duration: 25s;
-    }
-
-    .circle:nth-child(2) {
-      width: 150px;
-      height: 150px;
-      top: 60%;
-      left: 70%;
-      animation-duration: 18s;
-    }
-
-    .circle:nth-child(3) {
-      width: 100px;
-      height: 100px;
-      top: 30%;
-      left: 80%;
-      animation-duration: 22s;
-    }
-
-    .circle:nth-child(4) {
-      width: 250px;
-      height: 250px;
-      top: 80%;
-      left: 10%;
-      animation-duration: 30s;
-    }
-
-    .circle:nth-child(5) {
-      width: 120px;
-      height: 120px;
-      top: 50%;
-      left: 50%;
-      animation-duration: 20s;
-    }
+    .circle:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 20%; animation-duration: 25s; }
+    .circle:nth-child(2) { width: 150px; height: 150px; top: 60%; left: 70%; animation-duration: 18s; }
+    .circle:nth-child(3) { width: 100px; height: 100px; top: 30%; left: 80%; animation-duration: 22s; }
+    .circle:nth-child(4) { width: 250px; height: 250px; top: 80%; left: 10%; animation-duration: 30s; }
+    .circle:nth-child(5) { width: 120px; height: 120px; top: 50%; left: 50%; animation-duration: 20s; }
 
     @keyframes move {
       0% { transform: translateY(0) rotate(0deg); }
@@ -89,15 +56,14 @@
     /* Profile Header */
     .profile-header {
       position: relative;
-      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      z-index: 1;
     }
 
-    /* Profile DP */
-    /* Profile DP */
+    /* Profile Picture */
     .profile-pic-wrapper {
       position: relative;
       width: 160px;
@@ -111,16 +77,16 @@
       overflow: hidden;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
-    
+
     .profile-pic-wrapper img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
       background-color: white;
-      transform: scale(1.1); /* Image zoomed 10% */
+      transform: scale(1.1);
     }
-    
+
     .camera-icon {
       position: absolute;
       top: 5px;
@@ -134,13 +100,9 @@
       transition: background 0.3s ease;
       z-index: 2;
     }
-    
-    .camera-icon:hover {
-      background: #ffffff;
-    }
-    
 
-    /* Username */
+    .camera-icon:hover { background: #ffffff; }
+
     .username {
       font-size: 28px;
       font-weight: bold;
@@ -149,10 +111,8 @@
       text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
     }
 
-    /* Profile Info */
     .profile-info {
       margin-top: 20px;
-      z-index: 1;
     }
 
     .info-item {
@@ -167,7 +127,6 @@
       margin-right: 5px;
     }
 
-    /* Report buttons */
     .report-buttons {
       margin-top: 2rem;
       text-align: center;
@@ -179,7 +138,6 @@
       color: white;
       font-size: 18px;
       font-weight: 500;
-      cursor: pointer;
       border-radius: 50px;
       text-decoration: none;
       background-image: linear-gradient(315deg, #6a11cb 0%, #2575fc 74%);
@@ -193,7 +151,6 @@
       background-image: linear-gradient(315deg, #2575fc 0%, #6a11cb 74%);
     }
 
-    /* Table Header */
     th {
       background-color: #2575fc;
       color: #fff;
@@ -201,56 +158,32 @@
       text-align: center;
     }
 
-    /* Table Rows */
     td {
       background-color: #1c2b36;
       color: #dce3f0;
       text-align: center;
     }
 
-    /* Back Button */
-    .back-button {
+    .back-button, .sign-out-button {
       position: fixed;
       top: 20px;
-      left: 20px;
       padding: 10px 15px;
-      background-color: #2575fc;
       color: white;
       border-radius: 5px;
       font-size: 18px;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .back-button i {
-      margin-right: 8px;
-    }
-
-    /* Sign Out Button */
-    .sign-out-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      background-color: #ff5c5c;
-      color: white;
-      border-radius: 5px;
-      font-size: 18px;
-      cursor: pointer;
       text-decoration: none;
       display: flex;
       align-items: center;
+      z-index: 2;
     }
 
-    .sign-out-button:hover {
-      background-color: #ff4747;
-    }
+    .back-button { left: 20px; background-color: #2575fc; }
+    .back-button:hover { background-color: #1251c1; }
 
-    .sign-out-button i {
-      margin-right: 8px;
-    }
+    .sign-out-button { right: 20px; background-color: #ff5c5c; padding: 12px 20px; }
+    .sign-out-button:hover { background-color: #ff4747; }
 
+    .back-button i, .sign-out-button i { margin-right: 8px; }
   </style>
 </head>
 <body>
@@ -274,77 +207,56 @@
 
   <div class="content-wrapper">
     <div class="profile-header">
-      <!-- Profile Picture -->
-    <!-- Profile Picture -->
-<div class="profile-pic-wrapper">
-  <img src="{{ url_for('static', filename='images/defaultdp.png') }}" alt="">
-  <i class="fas fa-camera camera-icon"></i> <!-- Icon in the corner -->
-</div>
-
-
-      <!-- Username -->
+      <div class="profile-pic-wrapper">
+        <img src="{{ url_for('static', filename='images/defaultdp.png') }}" alt="">
+        <i class="fas fa-camera camera-icon"></i>
+      </div>
       <div class="username">{{ current_user.name }}</div>
     </div>
 
     <div class="profile-info">
-      <div class="info-item">
-        <span class="label">Email:</span>
-        <span>{{ current_user.email }}</span>
-      </div>
-      <div class="info-item">
-        <span class="label">Role:</span>
-        <span>{{ 'Admin' if current_user.is_admin else 'User' }}</span>
-      </div>
+      <div class="info-item"><span class="label">Email:</span> <span>{{ current_user.email }}</span></div>
+      <div class="info-item"><span class="label">Role:</span> <span>{{ 'Admin' if current_user.is_admin else 'User' }}</span></div>
     </div>
 
-    <!-- Reported Items Table -->
-    <!-- Reported Items Table -->
-<!-- Reported Items Table -->
-
-{% if not current_user.is_admin %}
-<h2>Your Reported Items</h2>
-  {% if items %}
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Location</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in items %}
-        <tr>
-          <td>{{ item.name }}</td>
-          <td>
-            {% if item.status == 'Lost' %}
-              <span class="badge bg-danger">Lost</span>
-            {% elif item.status == 'Found' %}
-              <span class="badge bg-success">Found</span>
-            {% else %}
-              <span class="badge bg-secondary">{{ item.status }}</span>
-            {% endif %}
-          </td>
-          <td>{{ item.location }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p class="text-center mt-3">You haven’t reported any items yet.</p>
-  {% endif %}
-{% endif %}
-
-        
-        
-      
     {% if not current_user.is_admin %}
+      <h2 class="mt-4">Your Reported Items</h2>
+      {% if items %}
+        <table class="table table-bordered mt-3">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>
+                {% if item.status == 'Lost' %}
+                  <span class="badge bg-danger">Lost</span>
+                {% elif item.status == 'Found' %}
+                  <span class="badge bg-success">Found</span>
+                {% else %}
+                  <span class="badge bg-secondary">{{ item.status }}</span>
+                {% endif %}
+              </td>
+              <td>{{ item.location }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-center mt-3">You haven’t reported any items yet.</p>
+      {% endif %}
+
       <div class="report-buttons">
         <a href="{{ url_for('report_lost') }}" class="btn btn-report">Report Lost Item</a>
         <a href="{{ url_for('report_found') }}" class="btn btn-report">Report Found Item</a>
       </div>
     {% endif %}
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
