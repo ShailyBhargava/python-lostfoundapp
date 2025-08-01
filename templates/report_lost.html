@@ -75,9 +75,38 @@
     .btn-back i {
         margin-right: 8px;
     }
+
+    .flash-messages {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        z-index: 1050;
+    }
 </style>
 
 <div class="container mt-4">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages mb-4">
+          <div class="container d-flex justify-content-center">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} shadow-lg fade show text-center px-4 py-2" 
+                   role="alert" style="max-width:600px; border-radius:10px;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <script>
+          setTimeout(() => {
+            document.querySelectorAll('.flash-messages .alert').forEach(el => el.remove());
+          }, 4000);
+        </script>
+      {% endif %}
+    {% endwith %}
+
     <div class="card report-container">
         <div class="report-header">
             <h3>Report Lost Item</h3>
@@ -110,15 +139,11 @@
                 </div>
 
                 <div class="button-group">
-                    <!-- Back Button -->
                     <a href="{{ url_for('dashboard') }}" class="btn-back">
                         <i class="fas fa-arrow-left"></i> Back
                     </a>
-
-                    <!-- Submit Button -->
                     <button type="submit" class="btn-submit">Submit Report</button>
                 </div>
-
             </form>
         </div>
     </div>
