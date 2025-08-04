@@ -35,8 +35,8 @@ login_manager.login_view = 'login'
 from flask_migrate import Migrate
 migrate = Migrate(app, db)
 
-# Models
 class User(UserMixin, db.Model):
+    __tablename__ = 'users'   # <-- बदला
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(256), nullable=False)
@@ -49,8 +49,9 @@ class User(UserMixin, db.Model):
     full_name = db.Column(db.String(100), nullable=False)
 
 class Item(db.Model):
+    __tablename__ = 'items'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))   # <-- Match with User
     name = db.Column(db.String(100))
     category = db.Column(db.String(50))   
     date = db.Column(db.String(50))
@@ -62,12 +63,14 @@ class Item(db.Model):
     user = db.relationship('User', back_populates='items')
 
 class Profile(db.Model):
+    __tablename__ = 'profiles'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <-- बदला
     full_name = db.Column(db.String(100))
     phone = db.Column(db.String(20))
 
     user = db.relationship('User', back_populates='profile', lazy=True)
+
    
 
 
